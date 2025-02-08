@@ -1,13 +1,19 @@
 from typing import Any, Dict
 
-def run(message: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-    """Test pipeline that just returns a simple message."""
-    message['content'] = "Pipeline test successful!"
-    return message
+def run(message, config):
+    """Simple test pipeline."""
+    return {
+        "content": "Pipeline test successful!",
+        "files": message.get("files", []),
+        "images": message.get("images", []),
+        "error": None
+    }
 
-# This is required for Open-WebUI to detect the pipeline
-PIPELINE = {
-    'name': 'GeminiConverterPipeline',
-    'description': 'Pipeline for converting files (PDFs, images) to structured data using Gemini 2.0 Flash.',
-    'run': run
+# Pipeline configuration
+pipeline = {
+    "name": "GeminiConverterPipeline",
+    "description": "Pipeline for converting files to structured data using Gemini 2.0 Flash",
+    "pipeline_id": "gemini_converter",
+    "show_in_list": True,
+    "run": run
 }
